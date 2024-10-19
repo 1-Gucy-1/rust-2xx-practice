@@ -1,0 +1,7 @@
+fn main() {
+    let x: f32 = 0.1 + 0.2;
+    let y: f32 = 0.3;
+    assert!(x.to_bits() == y.to_bits());
+
+    println!("Success!");
+}
