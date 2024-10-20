@@ -1,0 +1,16 @@
+fn main() {
+    let x: i32 = 3;
+    
+    for q in 0..x{
+        for i in 0..x{
+            for p in 0..(x-i){
+                print!(" ");
+            }
+            for j in 0..(2 * i + 1){
+                print!("*");
+            }
+            println!();
+        }
+    }
+}
+
