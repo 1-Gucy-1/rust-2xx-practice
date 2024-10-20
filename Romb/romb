@@ -1,0 +1,22 @@
+fn main() {
+    let x: i32 = 9;
+    let _y: i32 = x/2;
+
+    
+    for i in 0..(2 * x - 1) {
+        let e = if i < x {
+            i 
+        } else {
+            (2 * x - 2) - i 
+        };
+    
+        for p in 0..(x - e - 1){
+            print!(" ");
+        }
+        for _ in 0..(2 * e + 1) {
+            print!("*");
+        }
+        println!();
+    
+    }
+}
