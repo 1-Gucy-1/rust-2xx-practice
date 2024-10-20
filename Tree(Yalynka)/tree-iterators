@@ -1,0 +1,15 @@
+fn main() {
+    let triangles = 5; 
+    let max_width = triangles * 2 - 1; 
+
+    (0..triangles).for_each(|i| {
+        let height = i + 1; 
+        (0..triangles).for_each(|j| { 
+
+            (0..(max_width - (2 * j + 1)) / 2).for_each(|_| print!(" "));
+
+            (0..(2 * j + 1)).for_each(|_| print!("*"));
+            println!(); 
+        });
+    });
+}
