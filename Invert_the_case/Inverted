@@ -27,3 +27,8 @@ mod tests {
         });
     }
 }
+
+fn main() {
+    let example = String::from("Hello, World!");
+    println!("{}", invert_the_case(example));
+}
