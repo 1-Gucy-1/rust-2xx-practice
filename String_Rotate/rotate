@@ -1,9 +1,9 @@
 fn rotate(s: String, n: isize) -> String {
-    let len = s.len() as isize; // Довжина рядка
-    let shift = ((n % len) + len) % len; // Зсув у межах довжини рядка
+    let len = s.len() as isize; 
+    let shift = ((n % len) + len) % len; 
     let split_index = (len - shift) as usize;
 
-    // Об'єднуємо дві частини рядка, щоб створити обернений рядок
+
     s[split_index..].to_string() + &s[..split_index]
 }
 
