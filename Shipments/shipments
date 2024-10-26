@@ -1,0 +1,59 @@
+use rand::Rng; // імпорт модуля rand для генерації випадкових чисел
+
+//2
+/*Для того щоб забезпечити рівномірний розподіл вантажу на всіх кораблях, 
+загальна кількість вантажу total повинна бути кратною кількості кораблів n.
+Інакше не буде можливості забезпечити однакову кількість на всіх кораблях.*/
+
+fn count_permutation(shipments: &Vec<u32>) -> Option<usize> {
+    let total: u32 = shipments.iter().sum();
+    let n = shipments.len() as u32;
+
+    if total % n != 0 {
+        return None;  // Повертаємо None, якщо рівномірний розподіл неможливий
+    }
+
+    let average = total / n;
+    let mut moves = 0;
+    let mut balance = 0;
+
+    for &shipment in shipments {
+        balance += shipment as i32 - average as i32;
+        moves += balance.abs() as usize;
+    }
+
+    Some(moves)  // Повертаємо деяке значення в разі успіху
+}
+
+fn gen_shipments(n: usize) -> Vec<u32> {
+    let mut rng = rand::thread_rng();
+    let average_load = rng.gen_range(10..100); // Обираємо середнє значення
+
+    let mut shipments: Vec<u32> = (0..n).map(|_| average_load).collect();
+    shipments[0] += rng.gen_range(0..n as u32);
+
+    shipments
+}
+
+fn main() {
+    let shipments1 = vec![8, 2, 2, 4, 4];
+    let shipments2 = vec![9, 3, 7, 2, 9];
+
+    match count_permutation(&shipments1) {
+        Some(moves) => println!("Для shipments1 потрібні переміщення: {}", moves),
+        None => println!("Не можна вирівняти вантаж на кораблях у shipments1"),
+    }
+
+    match count_permutation(&shipments2) {
+        Some(moves) => println!("Для shipments2 потрібні переміщення: {}", moves),
+        None => println!("Не можна вирівняти вантаж на кораблях у shipments2"),
+    }
+
+    let generated_shipments = gen_shipments(5);
+    println!("Згенерований масив вантажів: {:?}", generated_shipments);
+    
+    match count_permutation(&generated_shipments) {
+        Some(moves) => println!("Для згенерованих вантажів потрібні переміщення: {}", moves),
+        None => println!("Не можна вирівняти вантаж на згенерованих кораблях"),
+    }
+}
