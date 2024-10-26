@@ -1,0 +1,51 @@
+#[derive(Debug, Clone)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+#[derive(Debug, Clone)]
+struct Rectangle {
+    a: Point, 
+    b: Point, 
+}
+
+fn area_of_rectangle(rect: &Rectangle) -> i32 {
+    let width = (rect.b.x - rect.a.x).abs();
+    let height = (rect.b.y - rect.a.y).abs();
+    width * height
+}
+
+fn overlap_area(rect1: &Rectangle, rect2: &Rectangle) -> i32 {
+    let x_overlap = std::cmp::max(0, std::cmp::min(rect1.b.x, rect2.b.x) - std::cmp::max(rect1.a.x, rect2.a.x));
+    let y_overlap = std::cmp::max(0, std::cmp::min(rect1.b.y, rect2.b.y) - std::cmp::max(rect1.a.y, rect2.a.y));
+    x_overlap * y_overlap
+}
+
+fn area_occupied(xs: &Vec<Rectangle>) -> i32 {
+    let mut total_area = 0;
+    let mut overlap_area_sum = 0;
+
+    for i in 0..xs.len() {
+        total_area += area_of_rectangle(&xs[i]);
+        for j in (i + 1)..xs.len() {
+            overlap_area_sum += overlap_area(&xs[i], &xs[j]);
+        }
+    }
+
+    total_area - overlap_area_sum
+}
+
+fn test_data() -> Vec<Rectangle> {
+    vec![
+        Rectangle { a: Point { x: 0, y: 0 }, b: Point { x: 3, y: 6 } }, 
+        Rectangle { a: Point { x: 3, y: 0 }, b: Point { x: 10, y: 2 } }, 
+        Rectangle { a: Point { x: 0, y: 2 }, b: Point { x: 4, y: 10 } }, 
+    ]
+}
+
+fn main() {
+    let rectangles = test_data();
+    let occupied_area = area_occupied(&rectangles);
+    println!("Фактична зайнята площа: {}", occupied_area);
+}
